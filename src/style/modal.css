@@ -1,0 +1,22 @@
+.text-margin-bottom{
+    margin-bottom: 10px !important;
+    width: 100%;
+}
+
+.buttonColor{
+    margin-top: 20px !important;
+    background-color: #07965d !important;
+}
+
+.iconColor{
+    color: gray;
+    cursor: pointer;
+}
+
+
+input[type=date]:required:invalid::-webkit-datetime-edit {
+    color: transparent;
+}
+input[type=date]:focus::-webkit-datetime-edit {
+    color: black !important;
+}

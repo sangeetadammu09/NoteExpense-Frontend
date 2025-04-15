@@ -1,0 +1,22 @@
+@import "tailwindcss";
+/* @import '../node_modules/bootstrap/dist/css/bootstrap.css';
+@import '../node_modules/bootstrap/dist/js/bootstrap.bundle';
+ */
+
+.bg-main{
+    background-color: #07965d
+}
+
+.css-gr4hu4-MuiPaper-root-MuiAppBar-root {
+    background-color:  #07965d !important;
+}
+
+.css-ivs1cr-MuiSvgIcon-root, .css-1ub3k4s-MuiSvgIcon-root {
+ fill : white !important;
+}
+
+.wrapper{
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 100vh;
+}
