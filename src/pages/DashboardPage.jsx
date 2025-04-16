@@ -9,6 +9,7 @@ import ExpenseModal from "../components/ExpenseModal";
 import TransactionTable from "../components/TransactionTable";
 import Charts from "../components/Charts";
 import {Paginator} from "../utils/paginatorHelper";
+import moment from "moment";
 function DashboardPage({ pathname }) {
   const { user } = useAuthStore();
   // const { getTransactionByUserId, status, response,error} = useTransactionStore();
@@ -22,7 +23,7 @@ function DashboardPage({ pathname }) {
   const [incomeData, setIncomeData] = useState([]);
   const [expenseData, setExpenseData] = useState([]);
   const [transactionLabelData, setTransactionLabelData] = useState([]);
-  const [selectedYear, setSelectedYear] = useState('2025');
+  const [selectedYear, setSelectedYear] = useState(moment().format('YYYY'));
   const [transactionCategory, setTransactionCategory] = useState([]);
   const [transactions, setTransactions] = useState([]);
   const [page, setPage] = useState(0);
@@ -30,6 +31,7 @@ function DashboardPage({ pathname }) {
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(false);
    const [transactionItem, setTransactionItem] = useState(null);
+   const [expenseDataForChart, setexpenseDataForChart] = useState([]);
 
 
   const showIncomeModal = () => {
@@ -54,21 +56,21 @@ function DashboardPage({ pathname }) {
   };
 
   const getDeleteApiResponse =(deleteApiResponse) => {
-  //  console.log(deleteApiResponse)
+  //  //console.log(deleteApiResponse)
     if(deleteApiResponse.status == 200){
      getTransactionByUserIdData();
     }
   };
 
   const getIncomeApiResponse =(response) => {
-    console.log(response)
+    //console.log(response)
     if(response.status == 200){
      getTransactionByUserIdData();
     }
   };
 
   const getExpenseApiResponse =(response) => {
-   // console.log(response)
+   // //console.log(response)
     if(response.status == 200){
      getTransactionByUserIdData();
      
@@ -77,7 +79,7 @@ function DashboardPage({ pathname }) {
 
 
   const handleYearChange = (event)=>{
-    console.log(event.target.value);
+    //console.log(event.target.value);
     let selectedYear = event.target.value;
     getTransactionStatisticsByUserIdAndYearData(selectedYear);
     setSelectedYear(selectedYear)
@@ -85,7 +87,7 @@ function DashboardPage({ pathname }) {
 
 
     const handleChangePage = (event, newPage) => {
-   //   console.log(newPage)
+   //   //console.log(newPage)
       setPage(newPage);
       pagination.pageNumber = newPage+1;
       getTransactionByUserIdData(pagination);
@@ -99,7 +101,7 @@ function DashboardPage({ pathname }) {
 
 
     const openUpdateModal = (item)=>{
-      console.log(item)
+      //console.log(item)
       item.type == 'expense' ? setIsExpenseModalVisible(true) : setIsIncomeModalVisible(true);
       setTransactionItem(item);
     }
@@ -108,11 +110,11 @@ function DashboardPage({ pathname }) {
   const getTransactionByUserIdData = async(paginationfilter)=>{
     if(user){
     //  const data = await getTransactionByUserId(user._id,pagination);
-    //  console.log(data)
+    //  //console.log(data)
     await axios.post(TRANSACTIONAPI.GET_TRANSACTIONBYUSERID+`${user._id}`,paginationfilter)
 			.then((response)=>{
        // setLoading(true);
-		//		console.log(response.data);
+		//		//console.log(response.data);
         const result = response.data;
         if(result.status == 200){
           const transactionData = result.data.transactionData;
@@ -122,13 +124,13 @@ function DashboardPage({ pathname }) {
           setExpense(transactionData.totalExpense);
           setTotalCount(result.data.totalItems);
           setRowsPerPage(paginationfilter.pageSize)
-          console.log('i am inside getTransactionByUserIdData')
+          //console.log('i am inside getTransactionByUserIdData')
           //setLoading(false)
         
         }
 			})
 			.catch((error)=>{
-			//	console.log(error)
+			//	//console.log(error)
 			//	set({status: 400,data: response.null,error: error});
 			})
    }
@@ -137,17 +139,17 @@ function DashboardPage({ pathname }) {
   const getTransactionStatisticsByUserIdAndYearData = async(yearValue)=>{
     if(user){
     //  const data = await getTransactionByUserId(user._id,pagination);
-    await axios.post(TRANSACTIONAPI.STATICTICS_TRANSACTION+`${yearValue}/${user._id}`)
+    await axios.post(TRANSACTIONAPI.STATISTICS_TRANSACTION+`${yearValue}/${user._id}`)
 			.then((response)=>{
         if(response.status == 200){
-        //  console.log(response.data.data)
+      //  console.log(response.data.data,'getTransactionStatisticsByUserIdAndYearData')
   
           let transactionStatisticsData = response.data.data;
           let incomeData = transactionStatisticsData.map((x)=> x.totalIncome);
           let expenseData = transactionStatisticsData.map((x)=> x.totalExpense);
           let labelData = transactionStatisticsData.map((x)=> x.month);
 
-       //   console.log(incomeData,expenseData,labelData);
+       //   //console.log(incomeData,expenseData,labelData);
           setIncomeData(incomeData);
           setExpenseData(expenseData);
           setTransactionLabelData(labelData)
@@ -156,7 +158,36 @@ function DashboardPage({ pathname }) {
         }
 			})
 			.catch((error)=>{
-			//	console.log(error)
+			//	//console.log(error)
+			//	set({status: 400,data: response.null,error: error});
+			})
+   }
+  }
+
+
+  const getTransactionByType = async(yearValue,type)=>{
+    if(user){
+    //  const data = await getTransactionByUserId(user._id,pagination);
+    //  //console.log(data)
+    let payload = {
+      yearid : yearValue,
+      userid : user._id
+    }
+    await axios.post(TRANSACTIONAPI.FILTERBY_TRANSACTION_TYPE+`${type}`,payload)
+			.then((response)=>{
+       // setLoading(true);
+		//		//console.log(response.data);
+        const result = response.data;
+        if(result.status == 200){
+          const transactionTypeData = result.data;
+          setexpenseDataForChart(transactionTypeData)
+          //console.log('i am inside getTransactionByUserIdData')
+          //setLoading(false)
+        
+        }
+			})
+			.catch((error)=>{
+			//	//console.log(error)
 			//	set({status: 400,data: response.null,error: error});
 			})
    }
@@ -168,13 +199,13 @@ function DashboardPage({ pathname }) {
     await axios.post(TRANSACTIONAPI.GET_ALLCATEGORYTRANSACTIONS,paginator)
 			.then((response)=>{
         if(response.status == 200){  
-       //   console.log(response.data.data)
+       //   //console.log(response.data.data)
           setTransactionCategory(response.data.data)
          
         }
 			})
 			.catch((error)=>{
-			//	console.log(error)
+			//	//console.log(error)
 				//set({status: 400,data: response.null,error: error});
 			})
    }
@@ -185,6 +216,7 @@ function DashboardPage({ pathname }) {
       getTransactionByUserIdData(pagination);
       getTransactionStatisticsByUserIdAndYearData(date);
       getAllTransactionCategory();
+      getTransactionByType(selectedYear,'expense')
   },[user])
 
   return (
@@ -200,8 +232,7 @@ function DashboardPage({ pathname }) {
 
     <Charts incomeData={incomeData} expenseData={expenseData} labelData={transactionLabelData}  
     getTransactionStatisticsByUserIdAndYearData={getTransactionStatisticsByUserIdAndYearData} 
-    handleYearChange={handleYearChange} selectedYear={selectedYear}/>
-      {JSON.stringify(loading)}
+    handleYearChange={handleYearChange} selectedYear={selectedYear} expenseDataForChart={expenseDataForChart} />
 		<TransactionTable transactions={transactions} getDeleteApiResponse={getDeleteApiResponse} handleChangePage={handleChangePage}
     rowsPerPage={rowsPerPage} page={page} totalCount={totalCount} loading={loading} handleChangeRowsPerPage={handleChangeRowsPerPage}
     openUpdateModal={openUpdateModal} />

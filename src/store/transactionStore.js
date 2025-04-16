@@ -9,12 +9,12 @@ export const useTransactionStore = create((set) => ({
 		try {
 			await axios.post(TRANSACTIONAPI.GET_TRANSACTIONBYUSERID+`${userid}`,payload)
 			.then((response)=>{
-				console.log(response.data);
+				//console.log(response.data);
 				return response.data
 				//set({status: 200,data: response.data,error: null});
 			})
 			.catch((error)=>{
-				console.log(error)
+				//console.log(error)
 				set({status: 400,data: response.null,error: error});
 			})
 		} catch (error) {

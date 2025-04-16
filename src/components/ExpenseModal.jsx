@@ -40,7 +40,7 @@ function ExpenseModal({ isExpenseModalVisible,handleExpenseCancel,sendExpenseApi
 
   const addExpense= (formData)=>{
     axios.post(TRANSACTIONAPI.ADD_TRANSACTION,formData).then((response)=>{
-        console.log(response)
+      //  console.log(response)
         if(response.data.status == 200){
           console.log(response)
           handleExpenseCancel();
@@ -49,12 +49,12 @@ function ExpenseModal({ isExpenseModalVisible,handleExpenseCancel,sendExpenseApi
         }
     })
     .catch((error)=>{
-        console.log(error)
+      //  console.log(error)
     })
    }
 
      const updateExpense = (formData) => {
-       console.log(TRANSACTIONAPI.UPDATE_TRANSACTION)
+    //   console.log(TRANSACTIONAPI.UPDATE_TRANSACTION)
        axios.put(TRANSACTIONAPI.UPDATE_TRANSACTION + `${transactionItem._id}`, formData).then((response) => {
          console.log(response)
          if (response.data.status == 200) {
@@ -65,7 +65,7 @@ function ExpenseModal({ isExpenseModalVisible,handleExpenseCancel,sendExpenseApi
          }
        })
          .catch((error) => {
-           console.log(error)
+      //     console.log(error)
          })
      }
 

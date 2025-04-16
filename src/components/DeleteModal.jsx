@@ -10,7 +10,7 @@ function DeleteModal({handleDeleteCancel,isDeleteModalVisible,transactionItem,se
  
     const deleteTransaction= (id)=>{
       axios.delete(TRANSACTIONAPI.DELETE_TRASACTION+`${id}`).then((response)=>{
-          console.log(response.status)
+        //  console.log(response.status)
           if(response.status == 200){
             console.log(response)
             sendDeleteApiResponse(response.data)
@@ -19,12 +19,12 @@ function DeleteModal({handleDeleteCancel,isDeleteModalVisible,transactionItem,se
           }
       })
       .catch((error)=>{
-          console.log(error)
+       //   console.log(error)
       })
      }
   
     const confirmDelete = async() => {
-      console.log(transactionItem)
+    //  console.log(transactionItem)
       await deleteTransaction(transactionItem._id)
     };
   

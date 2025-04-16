@@ -8,6 +8,7 @@ import { useAuthStore } from "../store/authStore";
 import { useEffect, useState } from 'react';
 import { PieChart } from '@mui/x-charts/PieChart';
 
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -19,7 +20,8 @@ const MenuProps = {
   },
 };
 
-function Charts({ incomeData, expenseData, labelData, handleYearChange,selectedYear}) {
+function Charts({ incomeData, expenseData, labelData, handleYearChange,selectedYear,expenseDataForChart}) {
+  console.log(expenseDataForChart)
 
   const [yearData, setYearData] = useState([]);
   const options = [
@@ -61,31 +63,15 @@ function Charts({ incomeData, expenseData, labelData, handleYearChange,selectedY
   }, [])
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-    console.log(event.currentTarget)
+  //  console.log(event.currentTarget)
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
 
   const handleGraphChange = (option) =>{
-    console.log(option);
+    //console.log(option);
     setBarOption(option);
-
-    // let incomeSeriesData = [
-    //   { data: incomeData, label: 'Income' },
-    // ]
-
-    // let expenseSeriesData = [
-    //   { data: expenseData, label: 'Expense' },
-    // ]
-
-    // let bothSeriesData = [
-    //   { data: incomeData, label: 'Income' },
-    //   { data: expenseData, label: 'Expense' }
-    // ]
-
-
-    // option == 'Income' ? setSeriesData(incomeSeriesData) : null
 
   }
 
@@ -154,8 +140,8 @@ function Charts({ incomeData, expenseData, labelData, handleYearChange,selectedY
                   </Select>
 
                 </FormControl>
-
-                <BarChart width={700} height={300}
+                <div style={{ height: "300px", width: "100%" }}>
+                <BarChart
                   series={ barOption == 'Both' ? [
                     { data: incomeData, label: 'Income' },
                     { data: expenseData, label: 'Expense' }
@@ -166,25 +152,23 @@ function Charts({ incomeData, expenseData, labelData, handleYearChange,selectedY
                   ]}
                   xAxis={[{ data: labelData, scaleType: 'band' }]}
                 />
-
+                </div>
+                
+            
+             
               </Card>
             </Grid>
             <Grid size={4}>
               <Card style={{ 'height': '420px' }}>            
                 <CardContent>
+                <div style={{ height: "400px", width: "100%" }}>
                 <PieChart
                 series={[
                   {
-                    data: [
-                      { id: 0, value: 10, label: 'series A' },
-                      { id: 1, value: 15, label: 'series B' },
-                      { id: 2, value: 20, label: 'series C' },
-                    ],
+                    data: expenseDataForChart,
                   },
                 ]}
                 margin={{ right: 0, top: 0,bottom :10 }}
-                width={300}
-                height={400}
                 slotProps={{
                   legend: {
                     direction: 'row',
@@ -194,6 +178,8 @@ function Charts({ incomeData, expenseData, labelData, handleYearChange,selectedY
                 }}
        
               />
+                </div>
+                
 
 
 

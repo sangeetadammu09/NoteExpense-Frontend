@@ -43,7 +43,7 @@ const demoTheme = createTheme({
 });
 
 function DemoPageContent({ pathname }) {
-  console.log(pathname)
+  //console.log(pathname)
   return (
     <Grid container>
       <Grid size={12}>

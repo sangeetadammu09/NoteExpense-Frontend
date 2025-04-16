@@ -24,7 +24,7 @@ const MenuProps = {
 };
 
 function IncomeModal({ isIncomeModalVisible, handleIncomeCancel, sendIncomeApiResponse, transactionCategory, transactionItem }) {
-  console.log(transactionItem)
+  //console.log(transactionItem)
   const { user } = useAuthStore();
 
   const validationSchema = Yup.object().shape({
@@ -51,41 +51,41 @@ function IncomeModal({ isIncomeModalVisible, handleIncomeCancel, sendIncomeApiRe
 
 
   const addIncome = (formData) => {
-    console.log(formData)
+    //console.log(formData)
     axios.post(TRANSACTIONAPI.ADD_TRANSACTION, formData).then((response) => {
-      console.log(response)
+      //console.log(response)
       if (response.data.status == 200) {
-        console.log(response)
+        //console.log(response)
         sendIncomeApiResponse(response.data)
         handleIncomeCancel();
 
       }
     })
       .catch((error) => {
-        console.log(error)
+        //console.log(error)
       })
   }
 
 
   const updateIncome = (formData) => {
-    console.log(TRANSACTIONAPI.UPDATE_TRANSACTION)
+    //console.log(TRANSACTIONAPI.UPDATE_TRANSACTION)
     axios.put(TRANSACTIONAPI.UPDATE_TRANSACTION + `${transactionItem._id}`, formData).then((response) => {
-      console.log(response)
+      //console.log(response)
       if (response.data.status == 200) {
-        console.log(response)
+        //console.log(response)
         sendIncomeApiResponse(response.data)
         handleIncomeCancel();
 
       }
     })
       .catch((error) => {
-        console.log(error)
+        //console.log(error)
       })
   }
 
 
   const onSubmit = (data) => {
-    console.log(data)
+    //console.log(data)
     let payload = data;
     payload.userid = user._id,
       payload.type = "income";
