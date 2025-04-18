@@ -1,6 +1,6 @@
 
 import { useAuthStore } from "../store/authStore";
-import Cards from "../components/cards";
+import Cards from "../components/Cards";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { TRANSACTIONAPI } from "../store/apiConfig";
