@@ -1,4 +1,6 @@
-const Parent_Domain = "http://localhost:3000/api/";
+const Parent_Domain = import.meta.env.VITE_API_URL;
+
+console.log(Parent_Domain)
 
 export const TRANSACTIONAPI = {
     ADD_TRANSACTION : Parent_Domain+'transaction/add', //post

@@ -7,8 +7,8 @@ import { useAuthStore } from "../store/authStore";
 
 function LoginPage() {
 
-    const [email, setEmail] = useState("sangeetadammu09@gmail.com");
-	const [password, setPassword] = useState("Hello!123");
+    const [email, setEmail] = useState("sangeetadammu12@gmail.com");
+	const [password, setPassword] = useState("Hello@123");
 
 	const { login, isLoading, error } = useAuthStore();
 

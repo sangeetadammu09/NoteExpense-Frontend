@@ -2,7 +2,8 @@ import { create } from "zustand";
 import axios from "axios";
 
 // const API_URL = import.meta.env.MODE === "development" ? "http://localhost:5000/api/auth" : "/api/auth";
-const API_URL ="http://localhost:3000/api/auth"
+const API_URL = import.meta.env.VITE_API_URL+"auth";
+//const API_USER_URL = import.meta.env.VITE_API_URL;
 axios.defaults.withCredentials = true;
 
 export const useAuthStore = create((set) => ({
@@ -72,6 +73,16 @@ export const useAuthStore = create((set) => ({
 			set({ error: null, isCheckingAuth: false, isAuthenticated: false });
 		}
 	},
+
+	// checkAllUsers: async () => {
+	// 	set({ isCheckingAuth: true, error: null });
+	// 	try {
+	// 		const response = await axios.get(`${API_URL}allusers`);
+	// 		set({ user: response.data.user, isAuthenticated: true, isCheckingAuth: false });
+	// 	} catch (error) {
+	// 		set({ error: null, isCheckingAuth: false, isAuthenticated: false });
+	// 	}
+	// },
 
 	forgotPassword: async (email) => {
 		set({ isLoading: true, error: null });

@@ -40,6 +40,7 @@ const RedirectAuthenticatedUser = ({ children }) => {
 function App() {
   const { isCheckingAuth, checkAuth } = useAuthStore();
 
+
 	useEffect(() => {
 		checkAuth();
 	}, [checkAuth]);
