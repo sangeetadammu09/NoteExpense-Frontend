@@ -1,7 +1,5 @@
 const Parent_Domain = import.meta.env.VITE_API_URL;
 
-console.log(Parent_Domain)
-
 export const TRANSACTIONAPI = {
     ADD_TRANSACTION : Parent_Domain+'transaction/add', //post
     GET_TRANSACTIONBYUSERID : Parent_Domain+'transaction/user/', //POST  /user/:userid
